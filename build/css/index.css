@@ -1,0 +1,62 @@
+
+@font-face {font-family: 'iconfont';
+    src: url('/static/icon/iconfont.eot'); /* IE9*/
+    src: url('/static/icon/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('/static/icon/iconfont.woff') format('woff'), /* chrome、firefox */
+    url('/static/icon/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('/static/icon/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+body {
+	margin: 0;
+	padding: 0;
+	color: #383838;
+	font-family: 'Microsoft YaHei', 'WenQuanYi MicroHei', sans-serif
+}
+ul, h1, h3, p {
+	margin: 0;
+	padding: 0;
+}
+li {
+	list-style: none;
+}
+a {
+	text-decoration: none;
+}
+.iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+.more:hover {
+	padding-right: 16px;
+}
+.more:hover .iconfont {
+	color: #B81D22 !important;
+}
+.center {
+	width: 80%;
+	margin: 0 auto;
+	min-width: 960px;
+}
+.header:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+.upload-api:hover {
+	background: #B81D22 !important;
+}
+.nav-list:hover {
+	background: #00BFFF !important;
+}
+.item-lister:hover {
+	color: #00BFFF !important;;
+}
+.add-shop:hover {
+	background: #666 !important;
+}
+.page-button:hover {
+	background: #00BFF9 !important;
+}

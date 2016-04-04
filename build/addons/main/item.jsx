@@ -18,6 +18,7 @@ let Item = React.createClass({
 			    marginLeft: keys % 4 === 0 ? '1%' : '',
 			    marginRight: keys % 4 === 3 ? '' : '2%',
 			}}>
+				<Info/>
 				<img style={{
 					width: '100%',
 					maxHeight: '170px',
@@ -68,7 +69,39 @@ let Item = React.createClass({
 				</div>
 			</div>
 		);
+
 	}
 });
+
+let Info = React.createClass({
+	getInitialState() {
+    	return {opci: '0'};
+  	},
+	handleMouseOver() {
+		this.setState({opci: '0.5'});
+  	},
+  	handleMouseOut() {
+  		this.setState({opci: '0'});
+  	},
+	render () {
+		return (
+			<div onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} style={{
+				width: '196px',
+				height: '65px',
+				position: 'absolute',
+				background: '#fff922',
+				transition: 'opacity 1s ease-in-out',
+				opacity: this.state.opci,
+				borderRadius: '0 0 10px 10px',
+			}}>
+			<p style={{
+				textIndent: '2rem',
+				fontSize: '13px',
+				lineHeight: '20px'
+			}}>这里是产品介绍之乐的东西，具体我也不知道，呵呵呵</p>
+			</div>
+		)
+	}
+})
 
 export default Item;

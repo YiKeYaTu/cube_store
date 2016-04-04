@@ -17,6 +17,7 @@ let Item = React.createClass({
 			    padding: '20px 20px',
 			    marginLeft: keys % 4 === 0 ? '1%' : '',
 			    marginRight: keys % 4 === 3 ? '' : '2%',
+			    transform: ;
 			}}>
 				<Info/>
 				<img style={{
@@ -87,7 +88,7 @@ let Info = React.createClass({
 		return (
 			<div onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} style={{
 				width: '196px',
-				height: '65px',
+				height: '300px',
 				position: 'absolute',
 				background: '#fff922',
 				transition: 'opacity 1s ease-in-out',

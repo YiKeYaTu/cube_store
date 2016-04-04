@@ -19,17 +19,13 @@ let Item = React.createClass({
 			    marginRight: keys % 4 === 3 ? '' : '2%',
 			}}>
 				<Info/>
-				<img style={{
-					width: '100%',
-					maxHeight: '170px',
-				}} src='http://172.22.146.3/CubeApiStore/img/carousel_back_2.jpg'/>
 				<p style={{
 					marginTop: '20px',
 					textAlign: 'center',
 					paddingBottom: '20px',
 					color: '#666',
 					fontWeight: 'bold',
-					borderBottom: '1px solid #00BFFF'
+					borderBottom: '2px solid #00BFFF'
 				}}>
 					这个API的名字是啥
 				</p>
@@ -77,29 +73,54 @@ let Info = React.createClass({
 	getInitialState() {
     	return {opci: '0'};
   	},
-	handleMouseOver() {
-		this.setState({opci: '0.5'});
+	handleMouseOver(e) {
+		let target = this.refs['img-outer'];
+		console.log(e.clientY);
+		this.setState({opci: '0.8'});
   	},
   	handleMouseOut() {
   		this.setState({opci: '0'});
   	},
 	render () {
 		return (
-			<div onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} style={{
-				width: '196px',
-				height: '65px',
-				position: 'absolute',
-				background: '#fff922',
-				transition: 'opacity 1s ease-in-out',
-				opacity: this.state.opci,
-				borderRadius: '0 0 10px 10px',
-			}}>
-			<p style={{
-				textIndent: '2rem',
-				fontSize: '13px',
-				lineHeight: '20px'
-			}}>这里是产品介绍之乐的东西，具体我也不知道，呵呵呵</p>
-			</div>
+			<section 
+				ref='img-outer'
+				onMouseOver={this.handleMouseOver} 
+				onMouseOut={this.handleMouseOut} 
+				style={{
+					width: '100%',
+					height: '170px',
+					cursor: 'pointer',
+					WebkitTransform: 'scale(1)',
+					MsTransform: 'scale(1)',
+					MozTransform: 'scale(1)', 
+					transform: 'scale(1)', 
+				}} 
+				className='img-outer'>
+				<div style={{
+					width: '100%',
+					height: '170px',
+					position: 'absolute',
+					background: '#00BFFF',
+					transition: 'opacity 0.5s ease-in-out',
+					opacity: this.state.opci,
+				}}>
+					<p style={{
+						padding: '4px 4px',
+						fontSize: '13px',
+						lineHeight: '20px',
+						color: '#fff'
+					}}>
+						这里是产品介绍之乐的东西，具体我也不知道，呵呵呵
+					</p>
+				</div>
+				<img style={{
+					width: '100%',
+					maxHeight: '170px',
+					minHeight: '160px',
+				}} src='http://file3.u148.net/2011/4/images/1302139153715.jpg'/>
+			</section>
+			
 		)
 	}
 })

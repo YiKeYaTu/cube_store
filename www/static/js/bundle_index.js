@@ -13,7 +13,7 @@ webpackJsonp([1],{
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(164);
+	var _index = __webpack_require__(165);
 
 	var _index2 = _interopRequireDefault(_index);
 
@@ -44,7 +44,7 @@ webpackJsonp([1],{
 		displayName: 'Item',
 		render: function render() {
 			var keys = this.props.keys;
-			var src = __webpack_require__(175);
+			var src = __webpack_require__(162);
 			return _react2.default.createElement(
 				'div',
 				{ style: {
@@ -62,10 +62,6 @@ webpackJsonp([1],{
 						marginRight: keys % 4 === 3 ? '' : '2%'
 					} },
 				_react2.default.createElement(Info, null),
-				_react2.default.createElement('img', { style: {
-						width: '100%',
-						maxHeight: '170px'
-					}, src: 'http://172.22.146.3/CubeApiStore/img/carousel_back_2.jpg' }),
 				_react2.default.createElement(
 					'p',
 					{ style: {
@@ -74,7 +70,7 @@ webpackJsonp([1],{
 							paddingBottom: '20px',
 							color: '#666',
 							fontWeight: 'bold',
-							borderBottom: '1px solid #00BFFF'
+							borderBottom: '2px solid #00BFFF'
 						} },
 					'这个API的名字是啥'
 				),
@@ -132,33 +128,57 @@ webpackJsonp([1],{
 		getInitialState: function getInitialState() {
 			return { opci: '0' };
 		},
-		handleMouseOver: function handleMouseOver() {
-			this.setState({ opci: '0.5' });
+		handleMouseOver: function handleMouseOver(e) {
+			var target = this.refs['img-outer'];
+			console.log(e.clientY);
+			this.setState({ opci: '0.8' });
 		},
 		handleMouseOut: function handleMouseOut() {
 			this.setState({ opci: '0' });
 		},
 		render: function render() {
 			return _react2.default.createElement(
-				'div',
-				{ onMouseOver: this.handleMouseOver, onMouseOut: this.handleMouseOut, style: {
-						width: '196px',
-						height: '65px',
-						position: 'absolute',
-						background: '#fff922',
-						transition: 'opacity 1s ease-in-out',
-						opacity: this.state.opci,
-						borderRadius: '0 0 10px 10px'
-					} },
+				'section',
+				{
+					ref: 'img-outer',
+					onMouseOver: this.handleMouseOver,
+					onMouseOut: this.handleMouseOut,
+					style: {
+						width: '100%',
+						height: '170px',
+						cursor: 'pointer',
+						WebkitTransform: 'scale(1)',
+						MsTransform: 'scale(1)',
+						MozTransform: 'scale(1)',
+						transform: 'scale(1)'
+					},
+					className: 'img-outer' },
 				_react2.default.createElement(
-					'p',
+					'div',
 					{ style: {
-							textIndent: '2rem',
-							fontSize: '13px',
-							lineHeight: '20px'
+							width: '100%',
+							height: '170px',
+							position: 'absolute',
+							background: '#00BFFF',
+							transition: 'opacity 0.5s ease-in-out',
+							opacity: this.state.opci
 						} },
-					'这里是产品介绍之乐的东西，具体我也不知道，呵呵呵'
-				)
+					_react2.default.createElement(
+						'p',
+						{ style: {
+								padding: '4px 4px',
+								fontSize: '13px',
+								lineHeight: '20px',
+								color: '#fff'
+							} },
+						'这里是产品介绍之乐的东西，具体我也不知道，呵呵呵'
+					)
+				),
+				_react2.default.createElement('img', { style: {
+						width: '100%',
+						maxHeight: '170px',
+						minHeight: '160px'
+					}, src: 'http://file3.u148.net/2011/4/images/1302139153715.jpg' })
 			);
 		}
 	});
@@ -167,7 +187,14 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 163:
+/***/ 162:
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "e0419f8c09d845e53dfd42bd0755694a.jpg";
+
+/***/ },
+
+/***/ 164:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -247,7 +274,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 164:
+/***/ 165:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -260,11 +287,11 @@ webpackJsonp([1],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _hot_item = __webpack_require__(165);
+	var _hot_item = __webpack_require__(166);
 
 	var _hot_item2 = _interopRequireDefault(_hot_item);
 
-	var _inf = __webpack_require__(163);
+	var _inf = __webpack_require__(164);
 
 	var _inf2 = _interopRequireDefault(_inf);
 
@@ -288,7 +315,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 165:
+/***/ 166:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -328,13 +355,6 @@ webpackJsonp([1],{
 	});
 
 	exports.default = HotItem;
-
-/***/ },
-
-/***/ 175:
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "e0419f8c09d845e53dfd42bd0755694a.jpg";
 
 /***/ }
 

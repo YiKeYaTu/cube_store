@@ -13,7 +13,7 @@ webpackJsonp([1],{
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(165);
+	var _index = __webpack_require__(164);
 
 	var _index2 = _interopRequireDefault(_index);
 
@@ -44,7 +44,7 @@ webpackJsonp([1],{
 		displayName: 'Item',
 		render: function render() {
 			var keys = this.props.keys;
-			var src = __webpack_require__(162);
+			var src = __webpack_require__(175);
 			return _react2.default.createElement(
 				'div',
 				{ style: {
@@ -128,13 +128,17 @@ webpackJsonp([1],{
 		getInitialState: function getInitialState() {
 			return { opci: '0' };
 		},
-		handleMouseOver: function handleMouseOver(e) {
+		handleMouseEnter: function handleMouseEnter(e) {
 			var target = this.refs['img-outer'];
-			console.log('鼠标' + e.clientY);
+			// if(e.clientY > 180 && e.clientY < 205){
+			this.setState({ left: '0px', top: '0px' });
+			// }
+			console.log('鼠标' + e.clientX);
 			console.log('元素' + target.offsetTop);
 			this.setState({ opci: '0.8' });
 		},
-		handleMouseOut: function handleMouseOut() {
+		handleMouseLeave: function handleMouseLeave() {
+			this.setState({ left: '0px', top: '-170px' });
 			this.setState({ opci: '0' });
 		},
 		render: function render() {
@@ -142,8 +146,8 @@ webpackJsonp([1],{
 				'section',
 				{
 					ref: 'img-outer',
-					onMouseOver: this.handleMouseOver,
-					onMouseOut: this.handleMouseOut,
+					onMouseOver: this.handleMouseEnter,
+					onMouseOut: this.handleMouseLeave,
 					style: {
 						width: '100%',
 						height: '170px',
@@ -151,7 +155,8 @@ webpackJsonp([1],{
 						WebkitTransform: 'scale(1)',
 						MsTransform: 'scale(1)',
 						MozTransform: 'scale(1)',
-						transform: 'scale(1)'
+						transform: 'scale(1)',
+						overflow: 'hidden'
 					},
 					className: 'img-outer' },
 				_react2.default.createElement(
@@ -160,8 +165,10 @@ webpackJsonp([1],{
 							width: '100%',
 							height: '170px',
 							position: 'absolute',
+							top: this.state.top ? this.state.top : '-170px',
+							// left: this.state.left ? this.state.left : '0px',
 							background: '#00BFFF',
-							transition: 'opacity 0.5s ease-in-out',
+							transition: 'all 0.5s ease-in-out',
 							opacity: this.state.opci
 						} },
 					_react2.default.createElement(
@@ -188,14 +195,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 162:
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "e0419f8c09d845e53dfd42bd0755694a.jpg";
-
-/***/ },
-
-/***/ 164:
+/***/ 163:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -275,7 +275,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 165:
+/***/ 164:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -288,11 +288,11 @@ webpackJsonp([1],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _hot_item = __webpack_require__(166);
+	var _hot_item = __webpack_require__(165);
 
 	var _hot_item2 = _interopRequireDefault(_hot_item);
 
-	var _inf = __webpack_require__(164);
+	var _inf = __webpack_require__(163);
 
 	var _inf2 = _interopRequireDefault(_inf);
 
@@ -316,7 +316,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 166:
+/***/ 165:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -356,6 +356,13 @@ webpackJsonp([1],{
 	});
 
 	exports.default = HotItem;
+
+/***/ },
+
+/***/ 175:
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "e0419f8c09d845e53dfd42bd0755694a.jpg";
 
 /***/ }
 

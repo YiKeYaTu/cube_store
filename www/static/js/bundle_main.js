@@ -351,6 +351,7 @@ webpackJsonp([2],{
 				{ style: {
 						float: 'left',
 						height: '18px',
+						cursor: 'pointer',
 						lineHeight: '18px',
 						color: '#000',
 						fontSize: '14px',
@@ -627,7 +628,7 @@ webpackJsonp([2],{
 		speed: 4000,
 		sliderArr: [{
 			url: '',
-			bg: '#000'
+			bg: '#00BFFF'
 		}, {
 			url: '',
 			bg: 'green'
@@ -645,6 +646,12 @@ webpackJsonp([2],{
 		},
 		componentDidMount: function componentDidMount() {
 			this.startAnimation();
+			window.onblur = function () {
+				this.stopAnimation();
+			}.bind(this);
+			window.onfocus = function () {
+				this.startAnimation();
+			}.bind(this);
 		},
 		startAnimation: function startAnimation() {
 			var count = arguments[0] === undefined ? this.state.count : arguments[0];
@@ -809,7 +816,7 @@ webpackJsonp([2],{
 						width: '100%',
 						marginTop: '20px',
 						borderTop: '1px solid #CECECE',
-						borderBottom: '1px solid #CECECE'
+						borderBottom: '60px solid #eee'
 					} },
 				_react2.default.createElement(
 					'div',

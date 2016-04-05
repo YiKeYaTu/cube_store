@@ -74,7 +74,7 @@ let Slider = React.createClass({
 	speed: 4000,
 	sliderArr: [{
 		url: '',
-		bg: '#000'
+		bg: '#00BFFF'
 	},{
 		url: '',
 		bg: 'green'
@@ -92,6 +92,12 @@ let Slider = React.createClass({
 	},
 	componentDidMount() {
 		this.startAnimation();
+		window.onblur = function () {
+			this.stopAnimation();
+		}.bind(this);
+		window.onfocus = function () {
+			this.startAnimation();
+		}.bind(this);
 	},
 	startAnimation () {
 		let count = (arguments[0] === undefined) ? this.state.count : arguments[0];

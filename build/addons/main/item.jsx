@@ -17,7 +17,6 @@ let Item = React.createClass({
 			    padding: '20px 20px',
 			    marginLeft: keys % 4 === 0 ? '1%' : '',
 			    marginRight: keys % 4 === 3 ? '' : '2%',
-			    transform: ;
 			}}>
 				<Info/>
 				<p style={{

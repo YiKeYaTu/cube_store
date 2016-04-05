@@ -130,7 +130,8 @@ webpackJsonp([1],{
 		},
 		handleMouseOver: function handleMouseOver(e) {
 			var target = this.refs['img-outer'];
-			console.log(e.clientY);
+			console.log('鼠标' + e.clientY);
+			console.log('元素' + target.offsetTop);
 			this.setState({ opci: '0.8' });
 		},
 		handleMouseOut: function handleMouseOut() {

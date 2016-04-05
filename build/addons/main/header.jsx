@@ -50,6 +50,7 @@ let UserList = React.createClass({
 			<li style={{
 				float: 'left',
 				height: '18px',
+				cursor: 'pointer',
 				lineHeight: '18px',
 				color: '#000',
 				fontSize: '14px',

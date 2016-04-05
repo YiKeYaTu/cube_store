@@ -6,7 +6,7 @@ let Footer = React.createClass({
 				width: '100%',
 				marginTop: '20px',
 				borderTop: '1px solid #CECECE',
-				borderBottom: '1px solid #CECECE',
+				borderBottom: '60px solid #eee',
 			}}>
 				<div className='center' style={{
 					paddingBottom: '20px',

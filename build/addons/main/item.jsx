@@ -17,6 +17,7 @@ let Item = React.createClass({
 			    padding: '20px 20px',
 			    marginLeft: keys % 4 === 0 ? '1%' : '',
 			    marginRight: keys % 4 === 3 ? '' : '2%',
+			    overflow: 'hidden',
 			}}>
 				<Info/>
 				<p style={{
@@ -71,27 +72,43 @@ let Item = React.createClass({
 
 let Info = React.createClass({
 	getInitialState() {
-    	return {opci: '0'};
+    	return {opci: '0', isRuning: 0, isIn: 0};
   	},
-	handleMouseEnter(e) {
-		let target = this.refs['img-outer'];
-		// if(e.clientY > 180 && e.clientY < 205){
-		this.setState({left: '0px', top: '0px'})
-		// }
-		console.log('鼠标' + e.clientX);
-		console.log('元素' + target.offsetTop)
-		this.setState({opci: '0.8'});
+
+  	mouseInHandler(){
+  		console.log('进入主区域')
+  		this.setState({isRuning: 1, isIn: 1}, function(){
+  			this.setState({left: '0px', top: '0px', opci: '0.6'});
+  		});
   	},
-  	handleMouseLeave() {
-  		this.setState({left: '0px', top: '-170px'})
-  		this.setState({opci: '0'});
+  	handleMouseIn(pos) {
+  		console.log('进入感应区');
+  		switch(pos){
+		case '-50px':
+			this.setState({left: '0px', top: '-170px', opci: '0'});
+			break;
+		case '1px':
+			this.setState({left: '-100%', top: '0px', opci: '0'});
+			break;
+		case '2px':
+			this.setState({left: '100%', top: '0', opci: '0'});
+			break;
+		case '170px':
+			this.setState({left: '0px', top: '170px', opci: '0'});
+			break;
+		}
+		
+  	},
+  	handleMouseOut(){
+  		if(this.state.isIn){
+  			console.log('离开感应区');
+  			this.setState({isIn: 0, isRuning: 0});
+  		}
   	},
 	render () {
 		return (
 			<section 
 				ref='img-outer'
-				onMouseOver = {this.handleMouseEnter} 
-				onMouseOut = {this.handleMouseLeave} 
 				style = {{
 					width: '100%',
 					height: '170px',
@@ -103,15 +120,20 @@ let Info = React.createClass({
 					overflow: 'hidden',
 				}} 
 				className='img-outer'>
+				<Sensors position="top" mousein={this.handleMouseIn} mouseout={this.handleMouseOut}/>
+				<Sensors position="left" mousein={this.handleMouseIn} mouseout={this.handleMouseOut}/>
+				<Sensors position="buttom" mousein={this.handleMouseIn} mouseout={this.handleMouseOut}/>
+				<Sensors position="right" mousein={this.handleMouseIn} mouseout={this.handleMouseOut}/>
 				<div style={{
+					zIndex: 0,
 					width: '100%',
 					height: '170px',
 					position: 'absolute',
-					top: this.state.top ? this.state.top : '-170px',
-					// left: this.state.left ? this.state.left : '0px',
+					top: this.state.top ? this.state.top: '10px',
+					left: this.state.left ? this.state.left : '10px',
 					background: '#00BFFF',
-					transition: 'all 0.5s ease-in-out',
-					opacity: this.state.opci,
+					transition: this.state.isRuning ? 'all 0.5s ease-in-out' : 'all 0s ease-in-out',
+					opacity: this.state.opci ? this.state.opci : '0',
 				}}>
 					<p style={{
 						padding: '4px 4px',
@@ -122,7 +144,7 @@ let Info = React.createClass({
 						这里是产品介绍之乐的东西，具体我也不知道，呵呵呵
 					</p>
 				</div>
-				<img style={{
+				<img onMouseEnter = {this.mouseInHandler} style={{
 					width: '100%',
 					maxHeight: '170px',
 					minHeight: '160px',
@@ -130,6 +152,73 @@ let Info = React.createClass({
 			</section>
 			
 		)
+	}
+})
+
+let Sensors = React.createClass({
+	handleMouseEnter(e) {
+		this.props.mousein(e.target.style.top);
+  	},
+  	handleMouseOut(){
+  		this.props.mouseout();
+  	},
+
+	propTypes: {
+    	position: React.PropTypes.string.isRequired,
+  	},
+	render () {
+		switch(this.props.position){
+		case 'top':
+		  return (
+		  	<span pos='top' onMouseOver={this.handleMouseEnter} onMouseOut={this.handleMouseOut} style={{
+		  		zIndex: 1,
+		  		position: 'absolute',
+		  		top: '-50px',
+		  		display: 'inline-block',
+		  		height: '50px',
+		  		width: '100%',
+		  	}}></span>
+		  )
+		  break;
+		case 'left':
+		  return (
+		  	<span pos = 'left' onMouseOver = {this.handleMouseEnter} onMouseOut={this.handleMouseOut} style={{
+		  		zIndex: 1,
+		  		position: 'absolute',
+		  		top: '1px',
+		  		left: '-50px',
+		  		display: 'inline-block',
+		  		height: '169px',
+		  		width: '50px',
+		  	}}></span>
+		  )
+		  break;
+		case 'buttom':
+		  return (
+		  		<span pos = 'buttom' onMouseOver = {this.handleMouseEnter} onMouseOut={this.handleMouseOut} style={{
+		  		zIndex: 1,
+		  		position: 'absolute',
+		  		top: '170px',
+		  		display: 'inline-block',
+		  		height: '50px',
+		  		width: '100%',
+		  	}}></span>
+		  )
+		  break;
+		case 'right':
+		  return (
+		  		<span pos = 'right' onMouseOver = {this.handleMouseEnter} onMouseOut={this.handleMouseOut} style={{
+		  		zIndex: 1,
+		  		position: 'absolute',
+		  		top: '2px',
+		  		right: '-30px',
+		  		display: 'inline-block',
+		  		height: '168px',
+		  		width: '30px',
+		  	}}></span>
+		  )
+		  break;
+		}
 	}
 })
 

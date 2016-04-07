@@ -73,22 +73,26 @@ let Info = React.createClass({
 	getInitialState() {
     	return {opci: '0'};
   	},
-	handleMouseOver(e) {
+	handleMouseEnter(e) {
 		let target = this.refs['img-outer'];
-		console.log('鼠标' + e.clientY);
+		// if(e.clientY > 180 && e.clientY < 205){
+		this.setState({left: '0px', top: '0px'})
+		// }
+		console.log('鼠标' + e.clientX);
 		console.log('元素' + target.offsetTop)
 		this.setState({opci: '0.8'});
   	},
-  	handleMouseOut() {
+  	handleMouseLeave() {
+  		this.setState({left: '0px', top: '-170px'})
   		this.setState({opci: '0'});
   	},
 	render () {
 		return (
 			<section 
 				ref='img-outer'
-				onMouseOver={this.handleMouseOver} 
-				onMouseOut={this.handleMouseOut} 
-				style={{
+				onMouseOver = {this.handleMouseEnter} 
+				onMouseOut = {this.handleMouseLeave} 
+				style = {{
 					width: '100%',
 					height: '170px',
 					cursor: 'pointer',
@@ -96,14 +100,17 @@ let Info = React.createClass({
 					MsTransform: 'scale(1)',
 					MozTransform: 'scale(1)', 
 					transform: 'scale(1)', 
+					overflow: 'hidden',
 				}} 
 				className='img-outer'>
 				<div style={{
 					width: '100%',
 					height: '170px',
 					position: 'absolute',
+					top: this.state.top ? this.state.top : '-170px',
+					// left: this.state.left ? this.state.left : '0px',
 					background: '#00BFFF',
-					transition: 'opacity 0.5s ease-in-out',
+					transition: 'all 0.5s ease-in-out',
 					opacity: this.state.opci,
 				}}>
 					<p style={{

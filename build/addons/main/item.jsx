@@ -1,13 +1,32 @@
 import React from 'react';
+let initArr = [];
+let flag = false;
+
+
 let Item = React.createClass({
+	getInitialState() {
+	    return {
+	        posJud: 0  
+	    };
+	},
+	handleGMouseOver (e) {
+		let name = e.target.getAttribute('name');
+		this.setState({
+			posJud: name
+		});
+	},
 	render () {
 		let keys = this.props.keys;
 		let src = require('../../images/feature-pic3.jpg');
 		return (
-			<div style={{
+			<div ref='container' style={{
 				width: '23%',
 				height: '300px',
 				marginTop: '20px',
+				WebkitTransform: 'scale(1)',
+				MsTransform: 'scale(1)',
+				MozTransform: 'scale(1)', 
+				transform: 'scale(1)',
 				boxShadow: '0px 0px 3px rgb(150, 150, 150)',
 			    WebkitBoxShadow: '0px 0px 3px rgb(150, 150, 150)',
 			    MozBoxShadow: '0px 0px 3px rgb(150, 150, 150)',
@@ -15,11 +34,15 @@ let Item = React.createClass({
 			    float: 'left',
 			    boxSizing: 'border-box',
 			    padding: '20px 20px',
+			    position: 'relative',
 			    marginLeft: keys % 4 === 0 ? '1%' : '',
 			    marginRight: keys % 4 === 3 ? '' : '2%',
-			    overflow: 'hidden',
 			}}>
-				<Info/>
+				<G name='1' onMouseOver={this.handleGMouseOver} top='-30' left='0' height='50' width='100%'/>
+				<G name='2' onMouseOver={this.handleGMouseOver} top='20' left='90%' height='170' width='25'/>
+				<G name='3' onMouseOver={this.handleGMouseOver} top='190' left='0' height='50' width='100%'/>
+				<G name='4' onMouseOver={this.handleGMouseOver} top='20' left='-30' height='170' width='25'/>
+				<Info posJud={this.state.posJud}/>
 				<p style={{
 					marginTop: '20px',
 					textAlign: 'center',
@@ -72,42 +95,87 @@ let Item = React.createClass({
 
 let Info = React.createClass({
 	getInitialState() {
-    	return {opci: '0', isRuning: 0, isIn: 0};
+    	return {
+    		isRuning: false,
+    		left: 0,
+    		top: '-170px',
+    	}
   	},
-
-  	mouseInHandler(){
-  		console.log('进入主区域')
-  		this.setState({isRuning: 1, isIn: 1}, function(){
-  			this.setState({left: '0px', top: '0px', opci: '0.6'});
-  		});
-  	},
-  	handleMouseIn(pos) {
-  		console.log('进入感应区');
-  		switch(pos){
-		case '-50px':
-			this.setState({left: '0px', top: '-170px', opci: '0'});
-			break;
-		case '1px':
-			this.setState({left: '-100%', top: '0px', opci: '0'});
-			break;
-		case '2px':
-			this.setState({left: '100%', top: '0', opci: '0'});
-			break;
-		case '170px':
-			this.setState({left: '0px', top: '170px', opci: '0'});
-			break;
+	posX: null,
+	posY: null,
+	width: null,
+	componentDidMount() {
+		initArr.push(this.initPos);
+		if (!flag) {
+			window.onload = function () {
+				initArr.forEach(function (item) {
+					item();
+				}.bind(this));
+			}.bind(this);
+			flag = true;
 		}
-		
-  	},
-  	handleMouseOut(){
-  		if(this.state.isIn){
-  			console.log('离开感应区');
-  			this.setState({isIn: 0, isRuning: 0});
-  		}
-  	},
+	},
+	initPos () {
+		let node = this.refs['img-outer'];
+		this.width = parseFloat(getComputedStyle(node,null)['width']);
+		while (node) {
+			this.posX += node.offsetLeft;
+			this.posY += node.offsetTop;
+			node = node.offsetParent;
+		}
+	},
+	handleMouseEnter (e) {
+		let relatedTarget = e.relatedTarget;
+		let target = e.currentTarget;
+		if (target.contains(relatedTarget)) {
+			return;
+		}
+		this.setState({
+			top: 0,
+			left: 0,
+			isRuning: true,
+		});
+
+	},
+	handleMouseLeave (e) {
+		let relatedTarget = e.relatedTarget;
+		let target = e.currentTarget;
+		if (target.contains(relatedTarget)) {
+			return;
+		}
+		let pageY = e.pageY, pageX = e.pageX;
+		let left = 0, top = 0;
+		if (pageY <= this.posY) {
+			top = '-170px';
+		} else if (pageY >= this.posY + 170) {
+			top = '170px';
+		} else if (pageX <= this.posX) {
+			left = '-100%';
+		} else {
+			left = '100%';
+		}
+		this.setState({
+			left: left,
+			top: top,
+		})
+	},
 	render () {
+		let left = this.state.left,
+			top = this.state.top;
+		// let posJud = this.props.posJud;
+		// if (posJud == 1) {
+		// 	top = '-170px';
+		// } else if (posJud == 2) {
+		// 	left = '100%';
+		// } else if (posJud == 3) {
+		// 	top = '170px';
+		// } else if (posJud == 4) {
+		// 	left = '-100%';
+		// }
 		return (
 			<section 
+				onMouseOver={this.handleMouseEnter} 
+				onMouseOut={this.handleMouseLeave}
 				ref='img-outer'
 				style = {{
 					width: '100%',
@@ -118,22 +186,19 @@ let Info = React.createClass({
 					MozTransform: 'scale(1)', 
 					transform: 'scale(1)', 
 					overflow: 'hidden',
+					position: 'relative',
 				}} 
 				className='img-outer'>
-				<Sensors position="top" mousein={this.handleMouseIn} mouseout={this.handleMouseOut}/>
-				<Sensors position="left" mousein={this.handleMouseIn} mouseout={this.handleMouseOut}/>
-				<Sensors position="buttom" mousein={this.handleMouseIn} mouseout={this.handleMouseOut}/>
-				<Sensors position="right" mousein={this.handleMouseIn} mouseout={this.handleMouseOut}/>
 				<div style={{
 					zIndex: 0,
 					width: '100%',
 					height: '170px',
 					position: 'absolute',
-					top: this.state.top ? this.state.top: '10px',
-					left: this.state.left ? this.state.left : '10px',
+					top: top,
+					left: left,
 					background: '#00BFFF',
-					transition: this.state.isRuning ? 'all 0.5s ease-in-out' : 'all 0s ease-in-out',
-					opacity: this.state.opci ? this.state.opci : '0',
+					transition: this.state.isRuning ? 'all 0.5s ease-in-out' : '',
+					opacity: '0.8',
 				}}>
 					<p style={{
 						padding: '4px 4px',
@@ -155,71 +220,20 @@ let Info = React.createClass({
 	}
 })
 
-let Sensors = React.createClass({
-	handleMouseEnter(e) {
-		this.props.mousein(e.target.style.top);
-  	},
-  	handleMouseOut(){
-  		this.props.mouseout();
-  	},
-
-	propTypes: {
-    	position: React.PropTypes.string.isRequired,
-  	},
+let G = React.createClass({
 	render () {
-		switch(this.props.position){
-		case 'top':
-		  return (
-		  	<span pos='top' onMouseOver={this.handleMouseEnter} onMouseOut={this.handleMouseOut} style={{
-		  		zIndex: 1,
-		  		position: 'absolute',
-		  		top: '-50px',
-		  		display: 'inline-block',
-		  		height: '50px',
-		  		width: '100%',
-		  	}}></span>
-		  )
-		  break;
-		case 'left':
-		  return (
-		  	<span pos = 'left' onMouseOver = {this.handleMouseEnter} onMouseOut={this.handleMouseOut} style={{
-		  		zIndex: 1,
-		  		position: 'absolute',
-		  		top: '1px',
-		  		left: '-50px',
-		  		display: 'inline-block',
-		  		height: '169px',
-		  		width: '50px',
-		  	}}></span>
-		  )
-		  break;
-		case 'buttom':
-		  return (
-		  		<span pos = 'buttom' onMouseOver = {this.handleMouseEnter} onMouseOut={this.handleMouseOut} style={{
-		  		zIndex: 1,
-		  		position: 'absolute',
-		  		top: '170px',
-		  		display: 'inline-block',
-		  		height: '50px',
-		  		width: '100%',
-		  	}}></span>
-		  )
-		  break;
-		case 'right':
-		  return (
-		  		<span pos = 'right' onMouseOver = {this.handleMouseEnter} onMouseOut={this.handleMouseOut} style={{
-		  		zIndex: 1,
-		  		position: 'absolute',
-		  		top: '2px',
-		  		right: '-30px',
-		  		display: 'inline-block',
-		  		height: '168px',
-		  		width: '30px',
-		  	}}></span>
-		  )
-		  break;
-		}
+		let left = this.props.left.match(/\%/) ? this.props.left : this.props.left + 'px';
+		return (
+			<div name={this.props.name} onMouseOver={this.props.onMouseOver} style={{
+				width: this.props.width,
+				height: this.props.height + 'px',
+				position: 'absolute',
+				top: this.props.top + 'px',
+				left: left,
+				zIndex: 100,
+			}}>
+			</div>
+		)
 	}
 })
-
 export default Item;
